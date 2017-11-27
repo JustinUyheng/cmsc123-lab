@@ -13,36 +13,39 @@ public class HashTable implements HashTableInterface {
         this.array = new Bucket[this.max];
     }
     public boolean put(String key, int value){
+        int hashCodeIndex = HashFunction(key);
         if(key == null && value == 0){
             return false;
-        }else if(this.array[HashFunction(key)].exists(key)){
+        }else if(this.array[hashCodeIndex].exists(key)){
             return false;
         } else{
-            this.array[HashFunction(key)].setKey(key);
-            this.array[HashFunction(key)].setValue(value);
+            this.array[hashCodeIndex].setKey(key);
+            this.array[hashCodeIndex].setValue(value);
             this.size++;
             return true;
         }
     }
 
     public String get(String key){
-        if(!this.array[HashFunction(key)].exists(key)){
+        int hashCodeIndex = HashFunction(key)
+        if(!this.array[hashCodeIndex].exists(key)){
             return null;
         }
 
-        return this.array[HashFunction(key)].key;
+        return this.array[hashCodeIndex].key;
 
     }
 
     public int remove(String key){
-        if(!this.array[HashFunction(key)].exists(key)){
+        int hashCodeIndex = HashFunction(key)
+        if(!this.array[hashCodeIndex].exists(key)){
             return -1;
         }
 
-        int removedValue = array[HashFunction(key)].getValue();
+        int removedValue = array[hashCodeIndex].getValue();
 
-        this.array[HashFunction(key)].setKey("null");
-        this.array[HashFunction(key)].setValue(-1);
+        this.array[hashCodeIndex].setKey("null");
+        this.array[hashCodeIndex].setValue(-1);
         this.size--;
 
         return removedValue;
